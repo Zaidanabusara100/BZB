@@ -1,0 +1,312 @@
+import java.util.Scanner;
+
+// Exception class for incorrect password
+class IncorrectPasswordException extends Exception {
+    @Override
+    public String getMessage() {
+        return "Incorrect password entered. Exiting program...";
+    }
+}
+
+// Abstract class for all devices
+abstract class Device {
+    public abstract void operate(HomeState homeState) throws IncorrectPasswordException;
+}
+
+// HomeState class to represent the state of the home
+class HomeState {
+    private boolean nightMode;
+    private String currentTime;
+
+    public HomeState(boolean nightMode, String currentTime) {
+        this.nightMode = nightMode;
+        this.currentTime = currentTime;
+    }
+
+    public boolean isNightMode() {
+        return nightMode;
+    }
+
+    public void setNightMode(boolean nightMode) {
+        this.nightMode = nightMode;
+    }
+
+    public String getCurrentTime() {
+        return currentTime;
+    }
+
+    public void setCurrentTime(String currentTime) {
+        this.currentTime = currentTime;
+    }
+}
+
+// DoorLock class for handling door lock functionality
+class DoorLock extends Device {
+    private String password;
+
+    public DoorLock(String password) {
+        this.password = password;
+    }
+
+    @Override
+    public void operate(HomeState homeState) throws IncorrectPasswordException {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the password to unlock the door: ");
+        String enteredPassword = scanner.nextLine();
+
+        if (enteredPassword.equals(password)) {
+            System.out.println("Correct password, door unlocked.");
+        } else {
+            throw new IncorrectPasswordException();
+        }
+    }
+}
+
+// Temperature class for handling temperature control
+class Temperature extends Device {
+    @Override
+    public void operate(HomeState homeState) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the current temperature: ");
+        float temperature = scanner.nextFloat();
+
+        if (temperature >= 25.0) {
+            System.out.println("Ohh high temperature, turning on the air conditioner.");
+        } else if (temperature >= 20.0) {
+            System.out.println("The temperature in the room is pleasing.");
+        } else {
+            System.out.println("Low temperature, turning on the heater.");
+        }
+    }
+}
+
+// Lighting class for controlling lights
+class Lighting extends Device {
+    @Override
+    public void operate(HomeState homeState) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Why do you need the light? For studying or sitting? ");
+        String reason = scanner.nextLine();
+
+        if (reason.equalsIgnoreCase("studying")) {
+            System.out.println("Setting lighting for studying.");
+        } else if (reason.equalsIgnoreCase("sitting")) {
+            System.out.println("Setting lighting for sitting.");
+        } else {
+            System.out.println("Unknown reason, setting general lighting.");
+        }
+    }
+}
+
+// Music class for playing music
+class Music extends Device {
+    @Override
+    public void operate(HomeState homeState) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("What type of music would you like to play? (rock/pop/classical/jazz): ");
+        String genre = scanner.nextLine();
+
+        switch (genre.toLowerCase()) {
+            case "rock":
+                System.out.println("Playing rock music.");
+                break;
+            case "pop":
+                System.out.println("Playing pop music.");
+                break;
+            case "classical":
+                System.out.println("Playing classical music.");
+                break;
+            case "jazz":
+                System.out.println("Playing jazz music.");
+                break;
+            default:
+                System.out.println("Genre not recognized, No music.");
+                break;
+        }
+    }
+}
+
+// Curtain class for controlling curtains
+class Curtain extends Device {
+    @Override
+    public void operate(HomeState homeState) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Do you want to open or close the curtains? (open/close): ");
+        String action = scanner.nextLine();
+
+        if (action.equalsIgnoreCase("open")) {
+            System.out.println("Opening the curtains.");
+        } else if (action.equalsIgnoreCase("close")) {
+            System.out.println("Closing the curtains.");
+        } else {
+            System.out.println("Action not recognized, keeping the curtains as they are.");
+        }
+    }
+}
+
+// Reminder class for setting reminders
+class Reminder extends Device {
+    @Override
+    public void operate(HomeState homeState) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("What reminder would you like to set? (meeting/exercise/medication): ");
+        String reminder = scanner.nextLine();
+
+        switch (reminder.toLowerCase()) {
+            case "meeting":
+                System.out.println("Setting a reminder for a meeting, good luck!");
+                break;
+            case "exercise":
+                System.out.println("Finally! Setting a reminder for exercise.");
+                break;
+            case "medication":
+                System.out.println("Setting a reminder for medication.");
+                break;
+            default:
+                System.out.println("Reminder not recognized.");
+                break;
+        }
+    }
+}
+
+// SmartFridge class for managing the fridge
+class SmartFridge extends Device {
+    private static final int MAX_ITEMS = 10;
+    private String[] items = new String[MAX_ITEMS];
+    private int[] quantities = new int[MAX_ITEMS];
+    private int itemCount;
+
+    public SmartFridge() {
+        items[0] = "Milk";
+        quantities[0] = 2;
+        items[1] = "Eggs";
+        quantities[1] = 12;
+        items[2] = "Butter";
+        quantities[2] = 1;
+        items[3] = "Chicken";
+        quantities[3] = 3;
+        items[4] = "Mushroom";
+        quantities[4] = 6;
+
+        itemCount = 5;
+    }
+
+    private void checkItems() {
+        System.out.println("Items in the fridge:");
+        for (int i = 0; i < itemCount; i++) {
+            System.out.println("- " + items[i] + ": " + quantities[i]);
+        }
+    }
+
+    private void addItem() {
+        if (itemCount < MAX_ITEMS) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Enter item name: ");
+            String itemName = scanner.nextLine();
+            System.out.print("Enter quantity: ");
+            int quantity = scanner.nextInt();
+
+            items[itemCount] = itemName;
+            quantities[itemCount] = quantity;
+            itemCount++;
+
+            System.out.println("Item added successfully.");
+        } else {
+            System.out.println("Fridge is full, cannot add more items.");
+        }
+    }
+
+    @Override
+    public void operate(HomeState homeState) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Do you want to check or add items in the fridge? (check/add): ");
+        String action = scanner.nextLine();
+
+        if (action.equalsIgnoreCase("check")) {
+            checkItems();
+        } else if (action.equalsIgnoreCase("add")) {
+            addItem();
+        } else {
+            System.out.println("Action not recognized.");
+        }
+    }
+}
+
+// SecurityCamera class for monitoring security
+class SecurityCamera extends Device {
+    @Override
+    public void operate(HomeState homeState) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("What do you like to do(record/monitor)");
+        String action = scanner.nextLine();
+        if (action.equalsIgnoreCase("record")) {
+            System.out.println("Enter Date:(*//*)");
+            String date = scanner.nextLine();
+            System.out.println("Enter Time:(:* am/pm)");
+            String time = scanner.nextLine();
+            System.out.println("Record turned on, in "+date+" at "+time );
+        } else if (action.equalsIgnoreCase("monitor")) {
+            System.out.println("Security camera is turned on. Monitoring...");
+        } else {
+            System.out.println("Action not recognized.");
+        }
+    }
+}
+
+// Main class to run the program
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Devices array
+        Device[] devices = new Device[8];
+        devices[0] = new DoorLock("open^semsem");
+        devices[1] = new Temperature();
+        devices[2] = new Lighting();
+        devices[3] = new Music();
+        devices[4] = new Curtain();
+        devices[5] = new Reminder();
+        devices[6] = new SmartFridge();
+        devices[7] = new SecurityCamera();
+
+        // Attempt to unlock the door first
+        try {
+            devices[0].operate(new HomeState(false, ""));
+        } catch (IncorrectPasswordException e) {
+            System.out.println(e.getMessage());
+            return;
+        }
+
+        System.out.println("Welcome! You can now operate other devices.");
+
+        // Once the user is authenticated, ask about the time and night mode
+        System.out.print("Enter the current time: ");
+        String currentTime = scanner.nextLine();
+        System.out.print("Is it night time? (yes/no): ");
+        boolean nightMode = scanner.nextLine().equalsIgnoreCase("yes");
+
+        HomeState homeState = new HomeState(nightMode, currentTime);
+
+        // Menu for device operation
+        boolean exit = false;
+        while (!exit) {
+            System.out.println("\nChoose a device to operate:");
+            System.out.println("1. Temperature\n2. Lighting\n3. Music\n4. Curtain\n5. Reminder\n6. Smart Fridge\n7. Security Camera\n8. Exit");
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+
+            if (choice == 8) {
+                exit = true;
+                System.out.println("Exiting...");
+            } else if (choice >= 1 && choice <= 7) {
+                try {
+                    devices[choice].operate(new HomeState(false, ""));
+                } catch (IncorrectPasswordException e) {
+                    System.out.println(e.getMessage());
+                }
+            } else {
+                System.out.println("Invalid choice, please try again.");
+            }
+        }
+    }
+}
