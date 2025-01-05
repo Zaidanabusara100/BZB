@@ -136,7 +136,9 @@ public:
 			ob1.display();
 			if (i == 0)
 				break;
-		} while (i != 0);
+			else
+				cout << "envaled couise" << endl;
+		} while (i == 1 && i != 0);
 	}
 }ob2;
 class Deletelink : public LinkedList {
@@ -314,24 +316,38 @@ int main()
 {
 
 	int x;
-	int i;
+	int i{};
 	int need;
 	cout << "enter what you need ? 1-linkedlist 2-queue 3-stack" << endl;
 	cin >> need;
 	if (need == 1) {
 		do {
+			bool valid = false;
+
+			while (!valid) {
 			cout << "1-add link  2-delete link  3-exit" << endl;
 			cin >> x;
 			if (x == 1) {
 				ob2.Enterlink1();
+				valid = true;
 			}
 			else if (x == 2) {
 				ob3.Deletelink1();
+				valid = true;
 			}
-			else
+			else if (x == 3) {
 				cout << "Thank you " << endl;
-			break;
-		} while (i != 0);
+				valid = true;
+				break;
+			}
+			else{
+				cout << "Invalid choice. Please enter 1, 2, or 3." << endl;
+			}
+			}
+			cout << "1-add link  2-delete link  3-exit ? ";
+			cin >> x;
+			ob1.display();
+		} while (x != 3);
 	}
 	else if (need == 2) {
 		int number;
