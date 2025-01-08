@@ -154,6 +154,9 @@ public:
 			ob1.display();
 			if (i == 0)
 				break;
+			else if (i == 1) {
+				continue;
+			}
 			else
 				cout << "envaled couise" << endl;
 		} while (i == 1 && i != 0);
@@ -385,75 +388,72 @@ int main()
 					cout << "Invalid choice. Please enter 1, 2, or 3." << endl;
 				}
 			}
-			cout << "1-add link  2-delete link  3-exit ? ";
-			cin >> x;
-			ob1.display();
 		} while (x != 3);
 	}
 	else  if (need == 2) {
-		
-
-
-		
-			int number, hour;
-			string period;
-			cout << "Enter number of mohadrat: ";
-			cin >> number;
-
-			int* times = new int[number];  // مصفوفة لتخزين الأوقات بالدقائق
-
-			// إدخال الأوقات
-			for (int i = 0; i < number; i++) {
-				cout << "Enter hour for mohadrah " << i + 1 << " (1-12): ";
-				cin >> hour;
-				cout << "AM or PM? ";
-				cin >> period;
-
-				times[i] = convertToMinutes(hour, period);
-			}
-
-			// فرز الأوقات
-			selectionSort(times, number);
-
-			// إدخال الأوقات المرتبة إلى الطابور وعرضها بالنظام 12 ساعة
-			for (int i = 0; i < number; i++) {
-				ob4.Enqueue(convertTo12Hour(times[i]));  // الآن تعمل بشكل صحيح
-			}
-
-			ob4.display();
-			delete[] times;
-	}
-
-		else if (need == 3) {
-			int year;
-			int first;
-			int secound;
-			int theard;
-			cout << "what your year in un ?" << endl;
-			cin >> year;
-
-			for (int i = year; i >= 1; i--) {
-				cout << "enter hour for year " << i << " ?" << endl;
-				cout << "enter hour for first ?";
-				cin >> first;
-				cout << "enter hour for secound ?";
-				cin >> secound;
-				cout << "enter hour for sumure ?";
-				cin >> theard;
 
 
 
-				int sum;
-				sum = first + secound + theard;
-				ob5.push(sum);
-			}
-			ob5.display();
-			ob5.mony();
 
-		}
-		else {
-			cout << "envaled cohess" << endl;
+		int number, hour;
+		string period;
+		cout << "Enter number of mohadrat: ";
+		cin >> number;
+
+		int* times = new int[number];  // مصفوفة لتخزين الأوقات بالدقائق
+
+		// إدخال الأوقات
+		for (int i = 0; i < number; i++) {
+			cout << "Enter hour for mohadrah " << i + 1 << " (1-12): ";
+			cin >> hour;
+			cout << "AM or PM? ";
+			cin >> period;
+
+			times[i] = convertToMinutes(hour, period);
 		}
 
+		// فرز الأوقات
+		selectionSort(times, number);
+
+		// إدخال الأوقات المرتبة إلى الطابور وعرضها بالنظام 12 ساعة
+		for (int i = 0; i < number; i++) {
+			ob4.Enqueue(convertTo12Hour(times[i]));  // الآن تعمل بشكل صحيح
+		}
+
+		ob4.display();
+		delete[] times;
+	}
+
+	else if (need == 3) {
+		int year;
+		int first;
+		int secound;
+		int theard;
+		cout << "what your year in un ?" << endl;
+		cin >> year;
+
+		for (int i = year; i >= 1; i--) {
+			cout << "enter hour for year " << i << " ?" << endl;
+			cout << "enter hour for first ?";
+			cin >> first;
+			cout << "enter hour for secound ?";
+			cin >> secound;
+			cout << "enter hour for sumure ?";
+			cin >> theard;
+
+
+
+			int sum;
+			sum = first + secound + theard;
+			ob5.push(sum);
+		}
+		ob5.display();
+		ob5.mony();
 
 	}
+	else {
+		cout << "envaled cohess" << endl;
+	}
+
+
+}
