@@ -10,34 +10,7 @@ class IncorrectPasswordException extends Exception {
 
 // Abstract class for all devices
 abstract class Device {
-    public abstract void operate(HomeState homeState) throws IncorrectPasswordException;
-}
-
-// HomeState class to represent the state of the home
-class HomeState {
-    private boolean nightMode;
-    private String currentTime;
-
-    public HomeState(boolean nightMode, String currentTime) {
-        this.nightMode = nightMode;
-        this.currentTime = currentTime;
-    }
-
-    public boolean isNightMode() {
-        return nightMode;
-    }
-
-    public void setNightMode(boolean nightMode) {
-        this.nightMode = nightMode;
-    }
-
-    public String getCurrentTime() {
-        return currentTime;
-    }
-
-    public void setCurrentTime(String currentTime) {
-        this.currentTime = currentTime;
-    }
+    public abstract void operate() throws IncorrectPasswordException;
 }
 
 // DoorLock class for handling door lock functionality
@@ -49,7 +22,7 @@ class DoorLock extends Device {
     }
 
     @Override
-    public void operate(HomeState homeState) throws IncorrectPasswordException {
+    public void operate() throws IncorrectPasswordException {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter the password to unlock the door: ");
         String enteredPassword = scanner.nextLine();
@@ -65,7 +38,7 @@ class DoorLock extends Device {
 // Temperature class for handling temperature control
 class Temperature extends Device {
     @Override
-    public void operate(HomeState homeState) {
+    public void operate() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter the current temperature: ");
         float temperature = scanner.nextFloat();
@@ -83,7 +56,7 @@ class Temperature extends Device {
 // Lighting class for controlling lights
 class Lighting extends Device {
     @Override
-    public void operate(HomeState homeState) {
+    public void operate() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Why do you need the light? For studying or sitting? ");
         String reason = scanner.nextLine();
@@ -101,7 +74,7 @@ class Lighting extends Device {
 // Music class for playing music
 class Music extends Device {
     @Override
-    public void operate(HomeState homeState) {
+    public void operate() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("What type of music would you like to play? (rock/pop/classical/jazz): ");
         String genre = scanner.nextLine();
@@ -129,7 +102,7 @@ class Music extends Device {
 // Curtain class for controlling curtains
 class Curtain extends Device {
     @Override
-    public void operate(HomeState homeState) {
+    public void operate() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Do you want to open or close the curtains? (open/close): ");
         String action = scanner.nextLine();
@@ -147,7 +120,7 @@ class Curtain extends Device {
 // Reminder class for setting reminders
 class Reminder extends Device {
     @Override
-    public void operate(HomeState homeState) {
+    public void operate() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("What reminder would you like to set? (meeting/exercise/medication): ");
         String reminder = scanner.nextLine();
@@ -217,7 +190,7 @@ class SmartFridge extends Device {
     }
 
     @Override
-    public void operate(HomeState homeState) {
+    public void operate() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Do you want to check or add items in the fridge? (check/add): ");
         String action = scanner.nextLine();
@@ -235,18 +208,19 @@ class SmartFridge extends Device {
 // SecurityCamera class for monitoring security
 class SecurityCamera extends Device {
     @Override
-    public void operate(HomeState homeState) {
+    public void operate() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("What do you like to do(record/monitor)");
+        System.out.print("Do you want to record or monitor? (record/monitor): ");
         String action = scanner.nextLine();
+
         if (action.equalsIgnoreCase("record")) {
-            System.out.println("Enter Date:(*//*)");
+            System.out.print("Enter date (dd/mm/yyyy): ");
             String date = scanner.nextLine();
-            System.out.println("Enter Time:(:* am/pm)");
+            System.out.print("Enter time (hh:mm am/pm): ");
             String time = scanner.nextLine();
-            System.out.println("Record turned on, in "+date+" at "+time );
+            System.out.println("Recording started on " + date + " at " + time);
         } else if (action.equalsIgnoreCase("monitor")) {
-            System.out.println("Security camera is turned on. Monitoring...");
+            System.out.println("Monitoring started.");
         } else {
             System.out.println("Action not recognized.");
         }
@@ -255,7 +229,7 @@ class SecurityCamera extends Device {
 
 // Main class to run the program
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IncorrectPasswordException {
         Scanner scanner = new Scanner(System.in);
 
         // Devices array
@@ -271,21 +245,13 @@ public class Main {
 
         // Attempt to unlock the door first
         try {
-            devices[0].operate(new HomeState(false, ""));
+            devices[0].operate();
         } catch (IncorrectPasswordException e) {
             System.out.println(e.getMessage());
             return;
         }
 
         System.out.println("Welcome! You can now operate other devices.");
-
-        // Once the user is authenticated, ask about the time and night mode
-        System.out.print("Enter the current time: ");
-        String currentTime = scanner.nextLine();
-        System.out.print("Is it night time? (yes/no): ");
-        boolean nightMode = scanner.nextLine().equalsIgnoreCase("yes");
-
-        HomeState homeState = new HomeState(nightMode, currentTime);
 
         // Menu for device operation
         boolean exit = false;
@@ -299,11 +265,7 @@ public class Main {
                 exit = true;
                 System.out.println("Exiting...");
             } else if (choice >= 1 && choice <= 7) {
-                try {
-                    devices[choice].operate(new HomeState(false, ""));
-                } catch (IncorrectPasswordException e) {
-                    System.out.println(e.getMessage());
-                }
+                devices[choice].operate();
             } else {
                 System.out.println("Invalid choice, please try again.");
             }
