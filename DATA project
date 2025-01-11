@@ -9,6 +9,7 @@ struct Node
 	string data4;
 	Node* next;
 
+
 };
 
 class LinkedList {
@@ -135,7 +136,7 @@ public:
 			cout << "Enter a linke you need?";
 			cin >> link;
 			cout << "were you need add a link?" << endl;
-			cout << "1-in head  2-in postion  3-in Tail  ?";
+			cout << "1-in first  2-in postion  3-in last  ?";
 			cin >> location;
 			if (location == 1) {
 				ob1.inseartAtHead(link);
@@ -182,7 +183,7 @@ public:
 		do {
 
 			cout << "were you need delete a link?" << endl;
-			cout << "1-from head  2-from postion  3-from Tail  ?";
+			cout << "1-from first  2-from postion  3-from last  ?";
 			cin >> location;
 			if (location == 1) {
 				ob1.deleteHead();
@@ -238,7 +239,7 @@ public:
 		else {
 			Node* temp = front;
 			while (temp != NULL) {
-				cout << "mohadra " << i << " starts at: " << temp->data4 << endl;
+				cout << "lucture " << i << " starts at: " << temp->data4 << endl;
 				i++;
 				temp = temp->next;
 			}
@@ -349,12 +350,81 @@ public:
 		}
 		else if (specialisation == 4) {
 			coust = (tot * 58.5) + 450;
-			cout << coust << "JD" << endl;
+			cout << "You paid for University :" << coust << "JD" << endl;
 		}
 		else
 			cout << "envaled " << endl;
 	}
 }ob5;
+
+// تعريف كلاس Tree لهيكلة الشجرة وتنظيم الدوال
+class Tree {
+	struct Node {
+		int studentID; // رقم الطالب الجامعي
+		Node* left;    // الفرع الأيسر
+		Node* right;   // الفرع الأيمن
+
+		Node(int id) : studentID(id), left(nullptr), right(nullptr) {}
+	};
+
+	Node* root; // جذر الشجرة
+
+public:
+	Tree() : root(nullptr) {}
+
+	// دالة لإضافة طالب جديد إلى الشجرة
+	void insert(int studentID) {
+		root = insertRec(root, studentID);
+	}
+
+	// دالة للبحث عن طالب برقم معين
+	bool search(int studentID) {
+		return searchRec(root, studentID);
+	}
+
+	// دالة لعرض جميع أرقام الطلاب بترتيب تصاعدي
+	void inorderTraversal() {
+		inorderTraversalRec(root);
+	}
+
+private:
+	Node* insertRec(Node* node, int studentID) {
+		if (!node) {
+			return new Node(studentID);
+		}
+
+		if (studentID < node->studentID) {
+			node->left = insertRec(node->left, studentID);
+		}
+		else {
+			node->right = insertRec(node->right, studentID);
+		}
+
+		return node;
+	}
+
+	bool searchRec(Node* node, int studentID) {
+		if (!node) return false;
+
+		if (node->studentID == studentID) return true;
+
+		if (studentID < node->studentID) {
+			return searchRec(node->left, studentID);
+		}
+		else {
+			return searchRec(node->right, studentID);
+		}
+	}
+
+	void inorderTraversalRec(Node* node) {
+		if (!node) return;
+
+		inorderTraversalRec(node->left);
+		cout << node->studentID << " ";
+		inorderTraversalRec(node->right);
+	}
+};
+
 
 int main()
 {
@@ -362,7 +432,7 @@ int main()
 	int x;
 	int i{};
 	int need;
-	cout << "enter what you need ? 1-linkedlist 2-queue 3-stack" << endl;
+	cout << "Enter what you need ?\n1- Entering the student's information \n2- Making a daily lecture schedule \n3- Statement of account for your study period  \n4- Entry for the university Student : ID " << endl;
 	cin >> need;
 	if (need == 1) {
 		do {
@@ -397,14 +467,14 @@ int main()
 
 		int number, hour;
 		string period;
-		cout << "Enter number of mohadrat: ";
+		cout << "Enter number of lectures for day: ";
 		cin >> number;
 
 		int* times = new int[number];  // مصفوفة لتخزين الأوقات بالدقائق
 
 		// إدخال الأوقات
 		for (int i = 0; i < number; i++) {
-			cout << "Enter hour for mohadrah " << i + 1 << " (1-12): ";
+			cout << "Enter hour for lecture " << i + 1 << " (1-12): ";
 			cin >> hour;
 			cout << "AM or PM? ";
 			cin >> period;
@@ -429,16 +499,16 @@ int main()
 		int first;
 		int secound;
 		int theard;
-		cout << "what your year in un ?" << endl;
+		cout << "what your year in University ?" ;
 		cin >> year;
 
 		for (int i = year; i >= 1; i--) {
-			cout << "enter hour for year " << i << " ?" << endl;
-			cout << "enter hour for first ?";
+			cout << "Enter hour for year " << i << " :" << endl;
+			cout << "Enter hour for the first semester ?";
 			cin >> first;
-			cout << "enter hour for secound ?";
+			cout << "Enter hour for the secound semester ?";
 			cin >> secound;
-			cout << "enter hour for sumure ?";
+			cout << "Enter hour for the summer semester ?";
 			cin >> theard;
 
 
@@ -449,6 +519,55 @@ int main()
 		}
 		ob5.display();
 		ob5.mony();
+
+	}
+	else if (need == 4) {
+		Tree tree;
+
+		int choice, studentID;
+
+		cout << "=== University Student Management System ===" << endl;
+
+		do {
+			cout << "\n1. Add Student ID\n2. Search Student ID\n3. Display All Student IDs\n4. Exit\n";
+			cout << "Enter your choice: ";
+			cin >> choice;
+
+			switch (choice) {
+			case 1:
+				cout << "Enter the Student ID to add: ";
+				cin >> studentID;
+				tree.insert(studentID);
+				cout << "Student ID " << studentID << " added successfully!" << endl;
+				break;
+
+			case 2:
+				cout << "Enter the Student ID to search: ";
+				cin >> studentID;
+				if (tree.search(studentID)) {
+					cout << "Student ID " << studentID << " found in the system." << endl;
+				}
+				else {
+					cout << "Student ID " << studentID << " not found in the system." << endl;
+				}
+				break;
+
+			case 3:
+				cout << "All Student IDs (in ascending order): ";
+				tree.inorderTraversal();
+				cout << endl;
+				break;
+
+			case 4:
+				cout << "Exiting the system. Goodbye!" << endl;
+				break;
+
+			default:
+				cout << "Invalid choice. Please try again." << endl;
+			}
+		} while (choice != 4);
+
+
 
 	}
 	else {
