@@ -18,13 +18,13 @@ public:
 	LinkedList() {
 		head = NULL;
 	}
-	void inseartAtHead(string data) {
+	void inseartAtHead(string data) {//اضافة بالبداية
 		Node* newNode = new Node();
 		newNode->data = data;
 		newNode->next = head;
 		head = newNode;
 	}
-	void inseartAtTail(string data) {
+	void inseartAtTail(string data) {//اضافة بالنهايه
 		Node* newNode = new Node();
 		newNode->data = data;
 		newNode->next = NULL;
@@ -40,7 +40,7 @@ public:
 		temp->next = newNode;
 
 	}
-	void inseartAtPostion(int postion, string data) {
+	void inseartAtPostion(int postion, string data) {//اضافة بموقع معين
 		Node* newNode = new Node();
 		newNode->data = data;
 		if (postion == 1) {
@@ -60,33 +60,33 @@ public:
 		temp->next = newNode;
 	}
 
-	Node* search(string key) {
+	Node* search(string key) {//بحث عن عنصر معين
 		Node* temp = head;
 		while (temp != NULL) {
 			if (temp->data == key) {
-				cout << "Element found: " << temp->data << endl;
+				cout << "A link found: " << temp->data << endl;
 				return temp;
 			}
 			temp = temp->next;
 		}
-		cout << "Element not found." << endl;
+		cout << "A link not found." << endl;
 		return NULL;
 	}
 
-	void display() {
+	void display() {//طباعه
 		Node* temp = head;
 		while (temp != NULL) {
 			cout << temp->data << endl;
 			temp = temp->next;
 		}
 	}
-	void deleteHead() {
+	void deleteHead() {//حذف بالبداية
 		if (head == NULL)return;
 		Node* temp = head;
 		head = head->next;
 		delete temp;
 	}
-	void deleteTail() {
+	void deleteTail() {//حذف بالاخير
 		if (head == NULL)return;
 		if (head->next == NULL) {
 			delete head;
@@ -102,7 +102,7 @@ public:
 		}
 
 	}
-	void deleteAtPostion(int postion) {
+	void deleteAtPostion(int postion) {//حذف بمكان معين
 		if (head == NULL)return;
 		if (postion == 1) {
 			Node* temp = head;
@@ -131,9 +131,9 @@ public:
 	int postion;
 	int i;
 	int need;
-	void Enterlink1() {
+	void Enterlink1() {//ادخال المطلوب
 		do {
-			cout << "Enter a linke you need?";
+			cout << "Enter a link you need?";
 			cin >> link;
 			cout << "were you need add a link?" << endl;
 			cout << "1-in first  2-in postion  3-in last  ?";
@@ -174,7 +174,7 @@ public:
 
 	}
 }ob2;
-class Deletelink : public LinkedList {
+class Deletelink : public LinkedList {//حذف المطلوب
 public:
 	int location;
 	int postion;
@@ -247,17 +247,17 @@ public:
 	}
 }ob4;
 
-// تحويل الوقت إلى دقائق منذ منتصف الليل
-int convertToMinutes(int hour, string period) {
-	int minutes = (hour % 12) * 60;  // تحويل الساعة إلى دقائق
+
+int convertToMinutes(int hour, string period) {// نحول الوقت ل دقائق و كمان بحدد اذا ليلي بضيف 12 ساعة
+	int minutes = (hour % 12) * 60;  
 	if (period == "PM") {
-		minutes += 12 * 60;  // إضافة 12 ساعة إذا كان PM
+		minutes += 12 * 60;  
 	}
 	return minutes;
 }
 
-// فرز باستخدام Selection Sort
-void selectionSort(int times[], int n) {
+void selectionSort(int times[], int n) {//Selection Sort
+
 	for (int i = 0; i < n - 1; i++) {
 		int minIndex = i;
 		for (int j = i + 1; j < n; j++) {
@@ -269,8 +269,8 @@ void selectionSort(int times[], int n) {
 	}
 }
 
-// تحويل الدقائق إلى تنسيق 12 ساعة
-string convertTo12Hour(int minutes) {
+
+string convertTo12Hour(int minutes) {// تحويل الدقائق إلى  12 ساعة مع التحديد ليلي او صباحي
 	int hour24 = minutes / 60;
 	int hour12 = hour24 % 12;
 	if (hour12 == 0) hour12 = 12;
@@ -293,7 +293,7 @@ public:
 		if (ptr == NULL)
 			cout << "the stack id full" << endl;
 	}
-	void push(int item) {
+	void push(int item) {//ادخل مجموع السنة
 		Node* newNode = new Node();
 		newNode->data3 = item;
 		if (isEmpty()) {
@@ -320,7 +320,7 @@ public:
 
 
 		Node* temp = top;
-		while (temp != NULL) {
+		while (temp != NULL) {// طباعة
 			cout << "hour in " << i << " year=" << temp->data3 << endl;
 			i++;
 			tot += temp->data3;
@@ -330,7 +330,7 @@ public:
 
 
 	}
-	void mony() {
+	void mony() {// بحسب المدفوعات
 		int specialisation;
 		double coust;
 		cout << "what is your specialisation" << endl;
@@ -338,15 +338,15 @@ public:
 		cin >> specialisation;
 		if (specialisation == 1) {
 			coust = (tot * 48) + 450;
-			cout << coust << "JD" << endl;
+			cout << "You paid for University :" << coust << "JD" << endl;
 		}
 		else if (specialisation == 2) {
 			coust = (tot * 58.5) + 450;
-			cout << coust << "JD" << endl;
+			cout << "You paid for University :" << coust << "JD" << endl;
 		}
 		else if (specialisation == 3) {
 			coust = (tot * 50) + 450;
-			cout << coust << "JD" << endl;
+			cout << "You paid for University :" << coust << "JD" << endl;
 		}
 		else if (specialisation == 4) {
 			coust = (tot * 58.5) + 450;
@@ -357,32 +357,32 @@ public:
 	}
 }ob5;
 
-// تعريف كلاس Tree لهيكلة الشجرة وتنظيم الدوال
+
 class Tree {
 	struct Node {
-		int studentID; // رقم الطالب الجامعي
-		Node* left;    // الفرع الأيسر
-		Node* right;   // الفرع الأيمن
+		int studentID; // الرقم الجامعي
+		Node* left;    
+		Node* right;   
 
 		Node(int id) : studentID(id), left(nullptr), right(nullptr) {}
 	};
 
-	Node* root; // جذر الشجرة
+	Node* root; // اول التريي
 
 public:
 	Tree() : root(nullptr) {}
 
-	// دالة لإضافة طالب جديد إلى الشجرة
+	// نضيف طالب جديد
 	void insert(int studentID) {
 		root = insertRec(root, studentID);
 	}
 
-	// دالة للبحث عن طالب برقم معين
+	// ندور على طالب
 	bool search(int studentID) {
 		return searchRec(root, studentID);
 	}
 
-	// دالة لعرض جميع أرقام الطلاب بترتيب تصاعدي
+	// نطبع الارقام
 	void inorderTraversal() {
 		inorderTraversalRec(root);
 	}
@@ -432,7 +432,9 @@ int main()
 	int x;
 	int i{};
 	int need;
-	cout << "Enter what you need ?\n1- Entering the student's information \n2- Making a daily lecture schedule \n3- Statement of account for your study period  \n4- Entry for the university Student : ID " << endl;
+	do {
+		bool valid = false;
+	cout << "Enter what you need ?\n1- Entering the student's information \n2- Making a daily lecture schedule \n3- Statement of account for your study period  \n4- Entry for the university Student : ID  \n5.Exit" << endl;
 	cin >> need;
 	if (need == 1) {
 		do {
@@ -459,6 +461,7 @@ int main()
 				}
 			}
 		} while (x != 3);
+		valid = true;
 	}
 	else  if (need == 2) {
 
@@ -470,9 +473,9 @@ int main()
 		cout << "Enter number of lectures for day: ";
 		cin >> number;
 
-		int* times = new int[number];  // مصفوفة لتخزين الأوقات بالدقائق
+		int* times = new int[number];  // اراي عشان اخزن الارقام
 
-		// إدخال الأوقات
+
 		for (int i = 0; i < number; i++) {
 			cout << "Enter hour for lecture " << i + 1 << " (1-12): ";
 			cin >> hour;
@@ -482,16 +485,17 @@ int main()
 			times[i] = convertToMinutes(hour, period);
 		}
 
-		// فرز الأوقات
-		selectionSort(times, number);
 
-		// إدخال الأوقات المرتبة إلى الطابور وعرضها بالنظام 12 ساعة
+		selectionSort(times, number);//نتئكد من الترتيب
+
+		// إدخال الأوقات المرتبة
 		for (int i = 0; i < number; i++) {
-			ob4.Enqueue(convertTo12Hour(times[i]));  // الآن تعمل بشكل صحيح
+			ob4.Enqueue(convertTo12Hour(times[i]));  //عشان تصير مرتبة منيح 
 		}
 
 		ob4.display();
 		delete[] times;
+		valid = true;
 	}
 
 	else if (need == 3) {
@@ -499,7 +503,7 @@ int main()
 		int first;
 		int secound;
 		int theard;
-		cout << "what your year in University ?" ;
+		cout << "what your year in University ?";
 		cin >> year;
 
 		for (int i = year; i >= 1; i--) {
@@ -519,6 +523,7 @@ int main()
 		}
 		ob5.display();
 		ob5.mony();
+		valid = true;
 
 	}
 	else if (need == 4) {
@@ -529,7 +534,7 @@ int main()
 		cout << "=== University Student Management System ===" << endl;
 
 		do {
-			cout << "\n1. Add Student ID\n2. Search Student ID\n3. Display All Student IDs\n4. Exit\n";
+			cout << "\n1. Add Student ID\n2. Search Student ID\n3. Display All Student IDs\n4. Exit\n ";
 			cout << "Enter your choice: ";
 			cin >> choice;
 
@@ -567,12 +572,16 @@ int main()
 			}
 		} while (choice != 4);
 
+		valid = true;
 
-
+	}
+	else if (need == 5) {
+		cout << "thanks for you" << endl;
 	}
 	else {
-		cout << "envaled cohess" << endl;
+		cout << "Invalid choice. Please enter 1, 2, 3 or 4." << endl;
 	}
+}while (need != 5);
 
 
 }
